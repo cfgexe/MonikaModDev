@@ -17597,6 +17597,7 @@ label monika_utterson:
     m 2rkc "Homosexuality, during that time, was seen as a sin.
     m 2lkd "It kind of still is seen that way..."
     m 3eka "But great progress has been made!"
+    if 
     m 3hsb "I'm just glad the world is more accepting of different kinds of love."
     m 5ekbfa "Especially since I live in a world where I can love you, [mas_get_player_nickname()]!"
     m 5hsbfb "Ehehe~"
