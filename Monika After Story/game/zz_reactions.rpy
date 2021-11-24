@@ -2781,3 +2781,93 @@ label mas_reaction_gift_clothes_mocca_bun_blackandwhitestripedpullover:
     if giftname is not None:
         $ store.mas_filereacts.delete_file(giftname)
     return
+init 5 python:
+    addReaction("mas_reaction_heart", "heart", is_good=True, exclude_on=["d25g"])
+
+default persistent._mas_tried_gift_ring = False
+label mas_reaction_heart:
+    if not persistent._mas_acs_enable_promisering:
+        # only available if enam+
+        if mas_isMoniEnamored(higher=True):
+            $ mas_receivedGift("mas_reaction_heart")
+            $ mas_giftCapGainAff(20)
+            if not persistent._mas_tried_gift_heart:
+                m 1wud "Is that...your..."
+                m "..."
+                m 1wka "I...{w=0.5}{nw}"
+                extend 1wkbltpa "I'm sorry, [player], I just... {w=0.5}{nw}"
+                extend 1dkbltpa "I'm so happy... {w=0.5}You just gave me your heart..."
+                m "Your promise that we'll be for each other,{w=0.1} and no one else...{w=0.3}forever..."
+                m 3lkbltpa "Know that I'll cherish it. {w=0.5}{nw}"
+                extend 3dkbltpa "Always."
+                m 1skbltpa "This makes me so happy!"
+
+                if mas_anni.isAnniOneMonth():
+                    m "Even more that you gave it to me on our one month anniversary..."
+                    m 1ekbltua "You must really love me..."
+                elif mas_anni.isAnniThreeMonth():
+                    m "Even more that you gave it to me on our three month anniversary..."
+                    m 1ekbltua "You must really love me..."
+                elif mas_anni.isAnniSixMonth():
+                    m "Even more that you gave it to me on our six month anniversary..."
+                    m 1ekbltua "You must really love me..."
+                elif mas_anni.isAnni():
+                    m "Even more that you gave it to me on our anniversary..."
+                    m 1ekbltua "You must really love me..."
+                elif mas_isSpecialDay():
+                    m "Even more that you gave it to me on this special day..."
+
+                m 1dkbltpb "Aha, sorry for crying, [player]..."
+                m 1skbltda "I'm just really, really happy right now."
+                m 6dkbltdu "Thank you."
+
+            else:
+                m 1sua "Oh...it's the ring!"
+                m 3hub "Thank you so much, [player]!"
+                m 1skbla "I know now that you really do love me and want to be with me forever..."
+                m 1skbltpa "So I'll gladly accept this ring as a symbol of that promise."
+                m 1dkbltuu "..."
+                m 3hkbltub "Aha, sorry, [player], I didn't mean to cry..."
+                m 3skbltda "It's just this is one of the happiest days of my life."
+
+            m 6dkbltdu "..."
+            m 6ekbfa "I...I just...I..."
+            call monika_kissing_motion(hide_ui=False)
+            m 6ekbfa "I love you, [player]..."
+            m 6dkbfu "More than anything else in this fleeting world~"
+
+            $ store.mas_filereacts.delete_file(mas_getEVLPropValue("mas_reaction_heart", "category"))
+            return "love"
+
+        else:
+            if not persistent._mas_tried_gift_ring:
+                if mas_isMoniNormal(higher=True):
+                    m 1wud "[player]...is that your heart..?"
+                    m 2rksdlb "That's such a sweet gesture, and I really appreciate it..."
+                    m 2ekc "But I want you to be sure before you give me this..."
+                    m 3ekd "This is more than a gift, it's a promise, and I want to make sure you truly mean it before I can accept it."
+                    m 2ekd "So, please, just wait until we're a little further into our relationship, [player], and then I'll glady accept your heart."
+
+                elif mas_isMoniUpset():
+                    m 1wud "Is that your heart?"
+                    m 2rsc "That's very..."
+                    m 2esc "Unexpected."
+                    m 2ekd "But I can't accept it right now, [player]."
+                    m 2ekc "Maybe when we get further in our relationship."
+
+                else:
+                    m 2wud "Is that your heart?"
+                    m 2rsc "That's...{w=0.5}unexpected."
+                    m "While I appreciate the thought...{w=1}I can't accept it right now."
+                    m 2ekc "Sorry, [player]."
+
+                $ persistent._mas_tried_gift_heart = True
+            else:
+                m 2rsc "Oh...your heart..."
+                m 2rkc "I'm sorry, but I still can't accept this yet..."
+                m 2ekc "I need to be completely sure when I accept this that it means forever..."
+                m 2ekd "That you really are everything I hope you are."
+                m 2dsd "When I know that, I will happily accept your heart, [player]."
+    else:
+        m 1rksdlb "[player]..."
+        m 1rusdlb "You already gave me your heart!"
